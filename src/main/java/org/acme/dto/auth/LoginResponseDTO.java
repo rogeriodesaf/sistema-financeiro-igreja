@@ -4,7 +4,7 @@ import org.acme.enums.PerfilUsuario;
 
 public record LoginResponseDTO(
         String token,
-        String usuarioId,
+        Long usuarioId,
         String nome,
         PerfilUsuario perfil
 ) {
