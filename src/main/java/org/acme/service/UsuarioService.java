@@ -2,6 +2,7 @@ package org.acme.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.acme.dto.usuario.UsuarioRequestDTO;
 import org.acme.dto.usuario.UsuarioResponseDTO;
 import org.acme.entity.Usuario;
@@ -28,6 +29,7 @@ public class UsuarioService {
 
     }
 
+    @Transactional
     public UsuarioResponseDTO cadastarUsuario(UsuarioRequestDTO usuarioRequestDTO){
         var usuario = usuarioMapper.toEntity(usuarioRequestDTO);
        var existeUsuario = usuarioRepository.buscarPorEmail(usuario.email);
@@ -38,6 +40,7 @@ public class UsuarioService {
         usuario.senha = passwordService.hash(usuarioRequestDTO.senha());
 
         usuarioRepository.persist(usuario);
+        usuarioRepository.flush();
         return usuarioMapper.toResponse(usuario);
     }
 

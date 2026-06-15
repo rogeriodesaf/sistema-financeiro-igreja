@@ -29,4 +29,11 @@ public class AuthResource {
         return Response.ok(response).build();
     }
 
+    @GET
+    @Path("/teste")
+    @RolesAllowed("ADMINISTRADOR")
+    public String teste(){
+        return "Acesso permitido";
+    }
+
 }
