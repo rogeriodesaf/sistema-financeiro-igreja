@@ -7,6 +7,8 @@ import org.acme.entity.Categoria;
 import org.acme.mapper.CategoriaMapper;
 import org.acme.repository.CategoriaRepository;
 
+import java.util.List;
+
 @ApplicationScoped
 public class CategoriaService {
 
@@ -26,5 +28,17 @@ public class CategoriaService {
         categoriaRepository.persist(categoria);
         return categoriaMapper.toResponseDTO(categoria);
         // Lógica para criar categoria
+    }
+
+    public List<CategoriaResponseDTO> listarCategorias(){
+        List<Categoria> categorias = categoriaRepository.listarCategoriasAtivas();
+       return  categorias.stream()
+                .map(categoriaMapper::toResponseDTO)
+               .toList();
+
+    }
+
+    public CategoriaResponseDTO buscarPorId(Long id){
+            categoriaRepository.findById(id);
     }
 }
